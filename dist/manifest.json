@@ -1,8 +1,8 @@
 {
     "name": "IconFlow",
     "description": "Search and insert icons into Penpot projects",
-    "icon": "https://icon-flow1.netlify.app/icon.svg",
-    "code": "https://icon-flow1.netlify.app/plugin.js",
+    "icon": "./icon.svg",
+    "code": "./plugin.js",
     "permissions": [
         "content:read",
         "content:write",

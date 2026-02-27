@@ -1,7 +1,23 @@
 /// <reference types="@penpot/plugin-types" />
-import { InsertMessage } from '../types';
 
-console.log('IconFlow: plugin.js executed perfectly!');
+// No runtime imports — IIFE bundle must be fully self-contained
+// All types below are TypeScript-only and erased at compile time
+
+type IconData = {
+    name: string;
+    svg: string;
+};
+
+type InsertMessage = {
+    type: 'insert-icons';
+    icons: IconData[];
+    size: number | 'Auto';
+    color: string;
+    stroke?: number;
+    style?: 'outline' | 'filled';
+};
+
+console.log('IconFlow: plugin.js initialized!');
 
 penpot.ui.open('IconFlow', '', {
     width: 500,
@@ -26,9 +42,8 @@ penpot.ui.onMessage<any>((message) => {
                 modifiedSvg = modifiedSvg.replace(/fill="[^none]"/g, `fill="none"`);
             }
 
-            // Apply stroke
+            // Apply stroke width
             if (stroke !== undefined) {
-                // Remove existing stroke-width if present, or just add it to the svg tag
                 modifiedSvg = modifiedSvg.replace(/stroke-width="[^"]*"/g, `stroke-width="${stroke}"`);
             }
 
@@ -36,24 +51,17 @@ penpot.ui.onMessage<any>((message) => {
             if (shape) {
                 shape.name = icon.name;
 
-                // Handle resizing
                 if (size !== 'Auto') {
-                    // Maintaining aspect ratio based on original viewBox/size
                     shape.resize(size, size);
                 }
 
-                // Handle insertion placement
                 const selection = penpot.selection;
                 if (selection.length > 0 && selection[0].type === 'board') {
-                    // Insert into selected frame/board
                     const board = selection[0];
                     shape.x = board.x + (board.width / 2) - (shape.width / 2);
                     shape.y = board.y + (board.height / 2) - (shape.height / 2);
-                    // Workaround for penpot board appending (SDK requires group/board manipulation)
-                    // As of Penpot plugin API: 'board.appendChild is not consistently available depending on version'
                     penpot.group([shape, board]);
                 } else {
-                    // Insert at viewport center
                     shape.x = penpot.viewport.center.x - (shape.width / 2);
                     shape.y = penpot.viewport.center.y - (shape.height / 2);
                 }
@@ -62,7 +70,6 @@ penpot.ui.onMessage<any>((message) => {
         }).filter(Boolean);
 
         if (shapes.length > 0) {
-            // Group them if multiple are inserted at once so they are easy to move
             if (shapes.length > 1) {
                 const group = penpot.group(shapes as any);
                 if (group) {
@@ -76,7 +83,6 @@ penpot.ui.onMessage<any>((message) => {
     }
 });
 
-// Watch for selection changes and notify the UI
 penpot.on('themechange', (theme) => {
     penpot.ui.sendMessage({
         type: 'theme-changed',

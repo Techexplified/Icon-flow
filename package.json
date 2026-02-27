@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite build --watch\" \"vite preview\"",
-    "build": "node ./node_modules/vite/bin/vite.js build",
+    "dev": "concurrently \"vite build --watch\" \"vite build --config vite.config.plugin.ts --watch\" \"vite preview\"",
+    "build": "node ./node_modules/vite/bin/vite.js build && node ./node_modules/vite/bin/vite.js build --config vite.config.plugin.ts",
+    "postbuild": "node -e \"const fs=require('fs');['dist/plugin','dist/types'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
     "preview": "vite preview"
   },
   "dependencies": {

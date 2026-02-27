@@ -1,0 +1,11 @@
+/plugin.js
+  Content-Type: application/javascript; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/manifest.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/icon.svg
+  Content-Type: image/svg+xml
+  Access-Control-Allow-Origin: *
