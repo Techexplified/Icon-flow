@@ -1,0 +1,12 @@
+{
+    "name": "IconFlow",
+    "description": "Search and insert icons into Penpot projects",
+    "icon": "icon.svg",
+    "permissions": [
+        "content:read",
+        "content:write",
+        "library:read",
+        "user:read"
+    ],
+    "code": "plugin.js"
+}
