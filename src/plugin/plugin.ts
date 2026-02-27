@@ -3,7 +3,7 @@ import { InsertMessage } from '../types';
 
 console.log('IconFlow: plugin.js executed perfectly!');
 
-penpot.ui.open('IconFlow', `?theme=${penpot.theme}`, {
+penpot.ui.open('IconFlow', '', {
     width: 500,
     height: 600,
 });
